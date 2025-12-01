@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Analytics - NSGD.acx</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:#f4f6fb}.layout{display:flex;min-height:100vh}.sidebar{width:230px;background:linear-gradient(180deg,#04192b,#08243a);color:#e6eef9;padding:20px 16px;position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between}.nav-item{display:flex;gap:12px;padding:10px;border-radius:12px;color:#eaf2ff;text-decoration:none;margin:6px 4px}.nav-item.active{background:linear-gradient(90deg,#1f55c6,#0e3a6a)}.main{margin-left:230px;flex:1}.topbar{height:72px;display:flex;align-items:center;padding:20px 28px}.content{padding:22px 28px}.card{background:white;border-radius:14px;padding:20px;border:1px solid rgba(230,238,248,0.9);box-shadow:0 12px 30px rgba(15,23,42,0.08);margin-bottom:20px}.metric{display:inline-block;width:23%;margin:1%;background:white;padding:20px;border-radius:10px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.08)}.metric h3{color:#6b7280;font-size:12px;margin-bottom:10px}.metric p{font-size:24px;font-weight:700;color:#0f4ea6}</style></head>
+<body>
+<div class="layout">
+<aside class="sidebar"><div><div style="display:flex;gap:12px;margin-bottom:20px"><div style="width:44px;height:44px;background:linear-gradient(135deg,#0f4ea6,#1a2f5a);border-radius:8px;color:white;display:flex;align-items:center;justify-content:center;font-weight:700">NS</div><div>NSGD.acx</div></div><nav style="margin-top:20px;flex:1"><a href="dashboard.html" class="nav-item">📊 Dashboard</a><a href="entry.html" class="nav-item">➕ Add Entry</a><a href="ledger.html" class="nav-item">📋 Ledger</a><a href="expenses.html" class="nav-item">💰 Expenses</a><a href="analysis.html" class="nav-item active">📈 Analytics</a></nav></div></aside>
+<main class="main">
+<header class="topbar"><h1 style="margin:0;font-size:20px;font-weight:700">Analytics & Reports</h1></header>
+<div class="content">
+<div class="card"><h3>Key Metrics</h3><div class="metric"><h3>Total Sales</h3><p>₹33,000</p></div><div class="metric"><h3>Total Paid</h3><p>₹19,000</p></div><div class="metric"><h3>Total Due</h3><p>₹14,000</p></div><div class="metric"><h3>Net Profit</h3><p>₹16,800</p></div></div>
+<div class="card"><h3>Monthly Summary</h3><p>📈 Monthly sales trending upward</p><p>✓ December: ₹33,000 (Target: ₹35,000)</p><p>✓ November: ₹28,500</p></div>
+</div>
+</main>
+</div>
+<script>
+if(!localStorage.getItem('token')) window.location.href='index.html';
+</script>
+</body>
+</html>
