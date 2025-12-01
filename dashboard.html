@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NSGD.acx</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, Segoe UI, Roboto, sans-serif; background: #f4f6fb; color: #0f1724; }
+        .layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 230px; background: linear-gradient(180deg, #04192b, #08243a); color: #e6eef9; padding: 20px 16px; position: fixed; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; }
+        .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .brand img { width: 44px; height: 44px; border-radius: 8px; background: white; padding: 4px; }
+        .nav { margin-top: 20px; flex: 1; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 12px; color: #eaf2ff; text-decoration: none; margin: 6px 4px; transition: all 0.15s ease; }
+        .nav-item:hover { transform: translateX(4px); background: linear-gradient(90deg, #0e3a6a, #143653); }
+        .nav-item.active { background: linear-gradient(90deg, #1f55c6, #0e3a6a); box-shadow: 0 6px 18px rgba(20, 45, 90, 0.12); }
+        .main { margin-left: 230px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+        .topbar { height: 72px; display: flex; flex-direction: column; justify-content: center; padding: 20px 28px; border-bottom: 1px solid rgba(15, 23, 42, 0.03); }
+        .top-title { font-size: 20px; font-weight: 700; }
+        .top-sub { color: #6b7280; font-size: 13px; margin-top: 4px; }
+        .content { padding: 22px 28px 40px; flex: 1; }
+        .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 22px; }
+        .metric-card { background: white; border-radius: 14px; padding: 22px; border: 1px solid rgba(230, 238, 248, 0.9); box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08); }
+        .metric-title { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; }
+        .metric-value { font-size: 22px; font-weight: 700; margin-top: 6px; }
+        .green { color: #0ea45a; font-weight: 600; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { font-size: 12px; color: #6b7280; text-transform: uppercase; padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #f0f2f5; font-size: 14px; }
+        .row { display: flex; gap: 22px; align-items: flex-start; }
+        .left-panel { flex: 3; background: white; border-radius: 14px; padding: 20px; border: 1px solid rgba(230, 238, 248, 0.9); box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08); }
+        .right-panel { width: 280px; background: white; border-radius: 14px; padding: 20px; border: 1px solid rgba(230, 238, 248, 0.9); box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08); }
+        .summary-line { display: flex; justify-content: space-between; margin: 8px 0; font-size: 14px; }
+        @media (max-width: 1000px) {
+            .metrics { grid-template-columns: repeat(2, 1fr); }
+            .row { flex-direction: column; }
+            .right-panel { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div>
+                <div class="brand">
+                    <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #0f4ea6, #1a2f5a); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px;">NS</div>
+                    <div class="name">NSGD.acx</div>
+                </div>
+                <nav class="nav">
+                    <a href="dashboard.html" class="nav-item active">📊 Dashboard</a>
+                    <a href="entry.html" class="nav-item">➕ Add Entry</a>
+                    <a href="ledger.html" class="nav-item">📋 Ledger</a>
+                    <a href="expenses.html" class="nav-item">💰 Personal Expenses</a>
+                    <a href="analysis.html" class="nav-item">📈 Analytics</a>
+                </nav>
+            </div>
+            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.35); border-top: 1px solid rgba(255, 255, 255, 0.03); padding-top: 14px;">NSGD.acx Internal Tool</div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div class="top-title">Dashboard</div>
+                <div class="top-sub">Quick overview of today's business</div>
+            </header>
+            <div class="content">
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="metric-title">Total Amount</div>
+                        <div class="metric-value" id="mamount">₹0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Total Paid</div>
+                        <div class="metric-value green" id="mpaid">₹0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Total Due</div>
+                        <div class="metric-value" id="mdue">₹0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Net Profit</div>
+                        <div class="metric-value" id="mprofit">₹0</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="left-panel">
+                        <h3 style="margin: 0 0 6px; font-weight: 700;">Recent Entries</h3>
+                        <div style="color: #6b7280; font-size: 13px; margin-bottom: 10px;">Latest 5 customers added</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>UID</th>
+                                    <th>Paid</th>
+                                    <th>Due</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentBody">
+                                <tr><td colspan="5" style="padding: 15px; color: #9ca3af;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="right-panel">
+                        <div style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">Today's Snapshot</div>
+                        <div style="font-size: 13px; color: #6b7280; margin-bottom: 14px;">Overall summary</div>
+                        <div class="summary-line"><span>Total Entries</span><span id="scount">0</span></div>
+                        <div class="summary-line"><span>Amount</span><span id="samount">₹0</span></div>
+                        <div class="summary-line"><span>Paid</span><span id="spaid">₹0</span></div>
+                        <div class="summary-line"><span>Due</span><span id="sdue">₹0</span></div>
+                        <div class="summary-line"><span>Expenses</span><span id="sexp">₹0</span></div>
+                        <div class="summary-line"><span>Net Profit</span><span class="green" id="sprofit">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Check if logged in
+        window.addEventListener('load', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+            loadDashboard();
+        });
+        
+        function fmt(n) { return Number(n || 0).toLocaleString(); }
+        
+        async function loadDashboard() {
+            try {
+                // Demo data
+                const data = [
+                    { date: '01/12/2025', uniqueID: 'NSGD-001', name: 'Sathvika', contact: '9876543210', agent: 'Agent A', amount: 10000, paid: 5000, expenditure: 500, payments: [{date: '01/12/2025', paid: 5000, expenditure: 500, mode: 'Cash'}] },
+                    { date: '30/11/2025', uniqueID: 'NSGD-002', name: 'Sanjeev', contact: '9876543211', agent: 'Agent B', amount: 15000, paid: 10000, expenditure: 1000, payments: [{date: '30/11/2025', paid: 10000, expenditure: 1000, mode: 'Bank'}] },
+                    { date: '29/11/2025', uniqueID: 'NSGD-003', name: 'Ravi', contact: '9876543212', agent: 'Agent C', amount: 8000, paid: 4000, expenditure: 300, payments: [{date: '29/11/2025', paid: 4000, expenditure: 300, mode: 'PhonePe'}] }
+                ];
+                
+                let amount = 0, paid = 0, due = 0, exp = 0;
+                data.forEach(e => {
+                    const amt = Number(e.amount || 0);
+                    const p = e.paid || 0;
+                    const x = e.expenditure || 0;
+                    amount += amt;
+                    paid += p;
+                    exp += x;
+                    due += amt - p;
+                });
+                
+                document.getElementById('mamount').innerText = '₹' + fmt(amount);
+                document.getElementById('mpaid').innerText = '₹' + fmt(paid);
+                document.getElementById('mdue').innerText = '₹' + fmt(due);
+                document.getElementById('mprofit').innerText = '₹' + fmt(paid - exp);
+                
+                document.getElementById('scount').innerText = data.length;
+                document.getElementById('samount').innerText = '₹' + fmt(amount);
+                document.getElementById('spaid').innerText = '₹' + fmt(paid);
+                document.getElementById('sdue').innerText = '₹' + fmt(due);
+                document.getElementById('sexp').innerText = '₹' + fmt(exp);
+                document.getElementById('sprofit').innerText = '₹' + fmt(paid - exp);
+                
+                const recent = data.slice().reverse().slice(0, 5);
+                const body = document.getElementById('recentBody');
+                body.innerHTML = '';
+                recent.forEach(e => {
+                    const d = Number(e.amount || 0) - (e.paid || 0);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${e.date}</td><td>${e.name}</td><td>${e.uniqueID}</td><td>₹${fmt(e.paid || 0)}</td><td>₹${fmt(d)}</td>`;
+                    body.appendChild(tr);
+                });
+            } catch (err) {
+                console.error('Dashboard Error:', err);
+            }
+        }
+    </script>
+</body>
+</html>
