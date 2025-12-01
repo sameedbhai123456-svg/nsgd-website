@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Add Entry - NSGD.acx</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:#f4f6fb}.layout{display:flex;min-height:100vh}.sidebar{width:230px;background:linear-gradient(180deg,#04192b,#08243a);color:#e6eef9;padding:20px 16px;position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between}.nav{margin-top:20px;flex:1}.nav-item{display:flex;gap:12px;padding:10px;border-radius:12px;color:#eaf2ff;text-decoration:none;margin:6px 4px}.nav-item.active{background:linear-gradient(90deg,#1f55c6,#0e3a6a)}.main{margin-left:230px;flex:1}.topbar{height:72px;display:flex;align-items:center;padding:20px 28px;border-bottom:1px solid rgba(15,23,42,0.03)}.content{padding:22px 28px}.card{background:white;border-radius:14px;padding:20px;border:1px solid rgba(230,238,248,0.9);box-shadow:0 12px 30px rgba(15,23,42,0.08);margin-bottom:20px}input,select{width:100%;padding:10px;margin-bottom:10px;border:1px solid #e5e7eb;border-radius:10px}.btn{background:#2563eb;color:white;padding:10px 20px;border:0;border-radius:8px;cursor:pointer}</style></head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div><div style="display:flex;gap:12px;margin-bottom:20px"><div style="width:44px;height:44px;background:linear-gradient(135deg,#0f4ea6,#1a2f5a);border-radius:8px;color:white;display:flex;align-items:center;justify-content:center;font-weight:700">NS</div><div>NSGD.acx</div></div><nav class="nav"><a href="dashboard.html" class="nav-item">📊 Dashboard</a><a href="entry.html" class="nav-item active">➕ Add Entry</a><a href="ledger.html" class="nav-item">📋 Ledger</a><a href="expenses.html" class="nav-item">💰 Expenses</a><a href="analysis.html" class="nav-item">📈 Analytics</a></nav></div>
+</aside>
+<main class="main">
+<header class="topbar"><h1 style="margin:0;font-size:20px;font-weight:700">Add Entry</h1></header>
+<div class="content">
+<div class="card">
+<h3>Entry Information</h3>
+<label>Customer Name</label><input id="name" placeholder="Enter customer name">
+<label>Contact Number</label><input id="contact" placeholder="Enter contact">
+<label>Amount</label><input id="amount" type="number" placeholder="Enter amount">
+<label>Paid Amount</label><input id="paid" type="number" placeholder="Enter paid amount">
+<button class="btn" onclick="saveEntry()" style="width:100%;margin-top:10px">Save Entry</button>
+</div>
+</div>
+</main>
+</div>
+<script>
+if(!localStorage.getItem('token')) window.location.href='index.html';
+function saveEntry(){
+  const data={name:document.getElementById('name').value,contact:document.getElementById('contact').value,amount:Number(document.getElementById('amount').value),paid:Number(document.getElementById('paid').value),date:new Date().toLocaleDateString('en-GB')};
+  localStorage.setItem('lastEntry',JSON.stringify(data));
+  alert('Entry saved!');
+  location.href='ledger.html';
+}
+</script>
+</body>
+</html>
